@@ -1,0 +1,24 @@
+
+services:
+  app:
+    container_name: docker-mongo-phone-book
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/phonebook
+    volumes:
+      - .:/src/server
+      - /usr/src/app/node_modules
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
