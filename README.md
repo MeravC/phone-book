@@ -48,9 +48,8 @@ phone-book/
 ├── prometheus.yml                 # Prometheus configuration
 ├── package-lock.json              # Project metadata and dependencies
 ├── package.json                   # Project metadata and dependencies
-├── README.md                      # Documentation
+└── README.md                      # Documentation
 
-variables
 ```
 
 ---
