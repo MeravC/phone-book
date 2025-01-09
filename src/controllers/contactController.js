@@ -1,4 +1,4 @@
-const Contact = require('../models/Contact');
+const Contact = require('../models/contact');
 const { metrics } = require('../metrics/prometheus');
 
 const contactController = {
