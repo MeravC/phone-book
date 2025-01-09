@@ -1,7 +1,6 @@
-
 services:
   app:
-    container_name: docker-mongo-phone-book
+    container_name: app-phone-book
     build: .
     ports:
       - "3000:3000"
@@ -9,16 +8,41 @@ services:
       - mongodb
     environment:
       - MONGODB_URI=mongodb://mongodb:27017/phonebook
+      - NODE_ENV=development
     volumes:
-      - .:/src/server
-      - /usr/src/app/node_modules
+      - .:/app
+      - /app/node_modules
 
   mongodb:
+    container_name: mongodb-phone-book
     image: mongo:latest
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
 
+  prometheus:
+    container_name: prometheus-phone-book
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    container_name: grafana-phone-book
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+
 volumes:
   mongodb_data:
+  grafana_data:
